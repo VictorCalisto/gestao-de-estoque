@@ -9,7 +9,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./app_estoque:/app
+      - ./gestao_estoque:/app
     depends_on:
       - db_estoque  
   #Banco da Aplicacao em "producao" // eu sei que so de mentirinha mas sou fa do postigres
