@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cliente: one
+  produto: one
+  quantidade: 1
+  data_venda: 2023-10-23 11:21:59
+
+two:
+  cliente: two
+  produto: two
+  quantidade: 1
+  data_venda: 2023-10-23 11:21:59

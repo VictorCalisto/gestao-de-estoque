@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Historicos</h1>
+
+<div id="historicos">
+  <% @historicos.each do |historico| %>
+    <%= render historico %>
+    <p>
+      <%= link_to "Show this historico", historico %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New historico", new_historico_path %>

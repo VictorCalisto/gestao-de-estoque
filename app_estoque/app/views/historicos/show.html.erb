@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @historico %>
+
+<div>
+  <%= link_to "Edit this historico", edit_historico_path(@historico) %> |
+  <%= link_to "Back to historicos", historicos_path %>
+
+  <%= button_to "Destroy this historico", @historico, method: :delete %>
+</div>

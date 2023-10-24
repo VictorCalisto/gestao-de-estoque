@@ -1,0 +1,81 @@
+<!-- _header.html.erb -->
+
+
+<section>
+  <a href="/">Gestor de Estoque</a>
+  <button id="toggleButton" class="botao" onclick="toggleMenu()"> &equiv; </button>
+  <nav id="navMenu" class="menu">
+    <div>
+      <ul class="menu-horizontal" style="list-style-type: none">
+        <li >
+          <%= link_to 'Produtos', produtos_path %>
+        </li>
+        <li>
+          <%= link_to 'Funcionários', funcionarios_path %>
+        </li>
+        <li>
+          <%= link_to 'Clientes', clientes_path %>
+        </li>
+        <li>
+          <%= link_to 'Fornecedores', fornecedores_path %>
+        </li>
+        <li>
+          <%= link_to 'Estoques', estoques_path %>
+        </li>
+        <li>
+          <%= link_to 'Pedidos', pedidos_path %>
+        </li>
+        <li>
+          <%= link_to 'Vendas', vendas_path %>
+        </li>
+        <li>
+          <%= link_to 'Movimentação', '/movimentacoes' %>
+        </li>
+        <li>
+          <%= link_to 'Histórico', historicos_path %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</section>
+
+
+<style>
+/* Estilo para o botão */
+.botao {
+  border: none; /* Sem borda */
+  padding: 15px 32px; /* Espaçamento interno */
+  text-align: center; /* Alinhamento do texto */
+  text-decoration: none; /* Sem decoração de texto */
+  display: inline-block; /* Exibição em bloco */
+  font-size: 16px; /* Tamanho da fonte */
+  margin: 4px 2px; /* Margem */
+  cursor: pointer; /* Cursor do mouse */
+  list-style-type: none;/* Cursor do mouse */
+}
+
+/* Estilo para o menu de navegação */
+.menu {
+  display: none; /* Ocultar o menu por padrão */
+}
+
+.menu-horizontal {
+  display: flex; /* Transforma os itens em flex items */
+  justify-content: space-between; /* Espaço igual entre os itens */
+  align-items: center; /* Centraliza verticalmente os itens */
+  font-size: 14px; /* Tamanho da letra */
+}
+
+</style>
+
+<!-- Script para mostrar/ocultar o menu -->
+<script>
+  function toggleMenu() {
+    var menu = document.querySelector('.menu');
+    if (menu.style.display === 'none') {
+        menu.style.display = 'block';
+    } else {
+        menu.style.display = 'none';
+    }
+  }
+</script>
