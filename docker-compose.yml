@@ -1,7 +1,7 @@
 version: '3'
 services:
   #Aplicacao web do sistema de estoque
-  app_estoque:
+  ruby:
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,18 +11,32 @@ services:
     volumes:
       - ./gestao_estoque:/app
     depends_on:
-      - db_estoque  
+      - postgres  
+    networks:
+      - my_network
   #Banco da Aplicacao em "producao" // eu sei que so de mentirinha mas sou fa do postigres
-  db_estoque:
+  postgres:
     image: postgres:16.0-alpine3.18
     restart: always
     environment:
+      #host do banco
       POSTGRES_DB: db_estoque
       POSTGRES_HOST_AUTH_METHOD: trust
-    # volumes:
-    #   - ./data:/var/lib/postgresql/data
+    volumes:
+      - ./data:/usr/local/bin/pg_config
     ports:
       - 5432:5432
-    # para verificar as credenciais de acesso ao banco
-    # psql -h db_estoque -U db_usuario -d db_estoque
+    networks:
+      - my_network
+  python:
+    image: python:3.13.0a1-alpine3.18
+    command: ["sh", "-c", "sleep infinity & pip3 install -r requirements.txt"]
+    volumes:
+      - ./python:/python
+    depends_on:
+      - postgres
+    networks:
+      - my_network
+networks:
+  my_network:
 

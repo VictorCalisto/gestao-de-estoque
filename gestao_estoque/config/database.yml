@@ -15,7 +15,7 @@ development:
   pool: 5
   username: postgres
   password:
-  host: db_estoque 
+  host: postgres 
   port: 5432 # a porta padrão do PostgreSQL é 5432
   database: db_estoque
 

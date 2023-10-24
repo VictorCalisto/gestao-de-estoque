@@ -9498,3 +9498,729 @@ Processing by FornecedoresController#show as HTML
 Completed 200 OK in 9ms (Views: 7.0ms | ActiveRecord: 0.4ms | Allocations: 3364)
 
 
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE DATABASE "postgres" ENCODING = 'unicode'[0m
+  [1m[35m (21.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(737815420147457505)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2023-10-24 16:56:18.072557', '2023-10-24 16:56:18.072560') RETURNING "key"[0m
+Migrating to CreateProdutos (20231022173907)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.7ms)[0m  [1m[35mCREATE TABLE "produtos" ("id" bigserial primary key, "nome" character varying, "descricao" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173907') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateFuncionarios (20231022173915)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "funcionarios" ("id" bigserial primary key, "nome" character varying, "cargo" character varying, "contato" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173915') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateClientes (20231022173926)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.7ms)[0m  [1m[35mCREATE TABLE "clientes" ("id" bigserial primary key, "nome" character varying, "contato" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173926') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateFornecedores (20231022173939)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "fornecedores" ("id" bigserial primary key, "nome" character varying, "contato" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173939') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateHistoricos (20231022174038)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE "historicos" ("id" bigserial primary key, "data" timestamp(6), "tipo" character varying, "id_relacionado" integer NOT NULL, "descricao" text, "transacao_por" integer NOT NULL, "localizacao" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mALTER TABLE "historicos" ADD CONSTRAINT "fk_rails_cc1c127a7d"
+FOREIGN KEY ("transacao_por")
+  REFERENCES "funcionarios" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174038') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEstoques (20231022174048)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "estoques" ("id" bigserial primary key, "produto_id" bigint NOT NULL, "quantidade" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_4226040c9f"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_estoques_on_produto_id" ON "estoques" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174048') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePedidos (20231022174056)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE TABLE "pedidos" ("id" bigserial primary key, "fornecedor_id" bigint NOT NULL, "produto_id" bigint NOT NULL, "quantidade" integer, "data_pedido" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_93b4457f69"
+FOREIGN KEY ("fornecedor_id")
+  REFERENCES "fornecedores" ("id")
+, CONSTRAINT "fk_rails_939dbfe2d7"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE INDEX "index_pedidos_on_fornecedor_id" ON "pedidos" ("fornecedor_id")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_pedidos_on_produto_id" ON "pedidos" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174056') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateVendas (20231022174103)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE "vendas" ("id" bigserial primary key, "cliente_id" bigint NOT NULL, "produto_id" bigint NOT NULL, "quantidade" integer, "data_venda" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_bad5fec6e4"
+FOREIGN KEY ("cliente_id")
+  REFERENCES "clientes" ("id")
+, CONSTRAINT "fk_rails_ab8f683e29"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_vendas_on_cliente_id" ON "vendas" ("cliente_id")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_vendas_on_produto_id" ON "vendas" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174103') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMovimentacoes (20231023165458)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE TABLE "movimentacoes" ("id" bigserial primary key, "quantidade" integer, "produto_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_f6a41e2c24"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE INDEX "index_movimentacoes_on_produto_id" ON "movimentacoes" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231023165458') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(737815420147457505)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.8ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Tênis Olímpicos Branco"], ["descricao", "Um tênis esportivo para atletas e amantes do esporte."], ["created_at", "2023-10-24 16:56:19.164934"], ["updated_at", "2023-10-24 16:56:19.164934"]]
+  [1m[36mTRANSACTION (3.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.4ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Sapato Saccarpan Vermelho"], ["descricao", "Um elegante sapato social em vermelho."], ["created_at", "2023-10-24 16:56:19.173330"], ["updated_at", "2023-10-24 16:56:19.173330"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.1ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Sapatilha Primavera Floral"], ["descricao", "Uma sapatilha feminina com estampa floral perfeita para a primavera."], ["created_at", "2023-10-24 16:56:19.177517"], ["updated_at", "2023-10-24 16:56:19.177517"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.4ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Botas Aventureiro em Couro"], ["descricao", "Botas robustas para os amantes da aventura e do ar livre."], ["created_at", "2023-10-24 16:56:19.181675"], ["updated_at", "2023-10-24 16:56:19.181675"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.3ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Sandália de Praia Sunset"], ["descricao", "Uma sandália confortável para desfrutar de um dia de sol na praia."], ["created_at", "2023-10-24 16:56:19.185846"], ["updated_at", "2023-10-24 16:56:19.185846"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (2.0ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "João Silva"], ["cargo", "Vendedor"], ["contato", "joao@lojadesapatos.com"], ["created_at", "2023-10-24 16:56:19.197351"], ["updated_at", "2023-10-24 16:56:19.197351"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (1.3ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Maria Santos"], ["cargo", "Vendedora"], ["contato", "maria@lojadesapatos.com"], ["created_at", "2023-10-24 16:56:19.202915"], ["updated_at", "2023-10-24 16:56:19.202915"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (1.3ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Pedro Ferreira"], ["cargo", "Gerente de Loja"], ["contato", "pedro@lojadesapatos.com"], ["created_at", "2023-10-24 16:56:19.207256"], ["updated_at", "2023-10-24 16:56:19.207256"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (0.9ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Ana Rodrigues"], ["cargo", "Caixa"], ["contato", "ana@lojadesapatos.com"], ["created_at", "2023-10-24 16:56:19.211180"], ["updated_at", "2023-10-24 16:56:19.211180"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (0.9ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Carlos Almeida"], ["cargo", "Estoquista"], ["contato", "carlos@lojadesapatos.com"], ["created_at", "2023-10-24 16:56:19.214484"], ["updated_at", "2023-10-24 16:56:19.214484"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (4.1ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Ana Pereira"], ["contato", "ana@gmail.com"], ["created_at", "2023-10-24 16:56:19.222550"], ["updated_at", "2023-10-24 16:56:19.222550"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (0.9ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Carlos Santos"], ["contato", "carlos@hotmail.com"], ["created_at", "2023-10-24 16:56:19.229460"], ["updated_at", "2023-10-24 16:56:19.229460"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (1.1ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Lúcia Ferreira"], ["contato", "lucia@yahoo.com"], ["created_at", "2023-10-24 16:56:19.232692"], ["updated_at", "2023-10-24 16:56:19.232692"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (1.0ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Mariana Silva"], ["contato", "mariana@gmail.com"], ["created_at", "2023-10-24 16:56:19.236792"], ["updated_at", "2023-10-24 16:56:19.236792"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (1.0ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Rafael Almeida"], ["contato", "rafael@hotmail.com"], ["created_at", "2023-10-24 16:56:19.240504"], ["updated_at", "2023-10-24 16:56:19.240504"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (1.3ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Fábrica de Calçados Star"], ["contato", "star@example.com"], ["created_at", "2023-10-24 16:56:19.249444"], ["updated_at", "2023-10-24 16:56:19.249444"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (1.0ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Distribuidora de Couro Lux"], ["contato", "lux@example.com"], ["created_at", "2023-10-24 16:56:19.253218"], ["updated_at", "2023-10-24 16:56:19.253218"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (0.9ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Importadora de Solas Solaris"], ["contato", "solaris@example.com"], ["created_at", "2023-10-24 16:56:19.256963"], ["updated_at", "2023-10-24 16:56:19.256963"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (0.9ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Fábrica de Sapatilhas Charme"], ["contato", "charme@example.com"], ["created_at", "2023-10-24 16:56:19.260522"], ["updated_at", "2023-10-24 16:56:19.260522"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (1.1ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Atacadista de Sapatos Top Style"], ["contato", "topstyle@example.com"], ["created_at", "2023-10-24 16:56:19.264108"], ["updated_at", "2023-10-24 16:56:19.264108"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (2.9ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 1], ["produto_id", 1], ["quantidade", 67], ["data_pedido", "2023-08-24 12:23:19.277313"], ["created_at", "2023-10-24 16:56:19.280170"], ["updated_at", "2023-10-24 16:56:19.280170"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.1ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 2], ["produto_id", 2], ["quantidade", 99], ["data_pedido", "2023-08-06 14:05:29.300242"], ["created_at", "2023-10-24 16:56:19.286205"], ["updated_at", "2023-10-24 16:56:19.286205"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.5ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 3], ["produto_id", 3], ["quantidade", 68], ["data_pedido", "2023-08-06 23:22:30.165820"], ["created_at", "2023-10-24 16:56:19.292139"], ["updated_at", "2023-10-24 16:56:19.292139"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.7ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 4], ["produto_id", 4], ["quantidade", 63], ["data_pedido", "2023-08-24 13:25:49.076839"], ["created_at", "2023-10-24 16:56:19.296431"], ["updated_at", "2023-10-24 16:56:19.296431"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.1ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 5], ["produto_id", 5], ["quantidade", 76], ["data_pedido", "2023-07-27 07:31:00.141370"], ["created_at", "2023-10-24 16:56:19.300877"], ["updated_at", "2023-10-24 16:56:19.300877"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.9ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 1], ["produto_id", 1], ["quantidade", 21], ["data_venda", "2023-10-12 03:11:59.469870"], ["created_at", "2023-10-24 16:56:19.313544"], ["updated_at", "2023-10-24 16:56:19.313544"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.4ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 2], ["produto_id", 2], ["quantidade", 20], ["data_venda", "2023-10-03 02:42:56.712462"], ["created_at", "2023-10-24 16:56:19.318675"], ["updated_at", "2023-10-24 16:56:19.318675"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.1ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 3], ["produto_id", 3], ["quantidade", 15], ["data_venda", "2023-10-17 11:31:56.156422"], ["created_at", "2023-10-24 16:56:19.323133"], ["updated_at", "2023-10-24 16:56:19.323133"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.2ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 4], ["produto_id", 4], ["quantidade", 20], ["data_venda", "2023-10-23 11:03:34.297720"], ["created_at", "2023-10-24 16:56:19.327095"], ["updated_at", "2023-10-24 16:56:19.327095"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.1ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 5], ["produto_id", 5], ["quantidade", 15], ["data_venda", "2023-10-03 01:26:53.964838"], ["created_at", "2023-10-24 16:56:19.330915"], ["updated_at", "2023-10-24 16:56:19.330915"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.4ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 1], ["quantidade", 46], ["created_at", "2023-10-24 16:56:19.340359"], ["updated_at", "2023-10-24 16:56:19.340359"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.0ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 2], ["quantidade", 79], ["created_at", "2023-10-24 16:56:19.344195"], ["updated_at", "2023-10-24 16:56:19.344195"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.2ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 3], ["quantidade", 53], ["created_at", "2023-10-24 16:56:19.347548"], ["updated_at", "2023-10-24 16:56:19.347548"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (2.9ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 4], ["quantidade", 43], ["created_at", "2023-10-24 16:56:19.351063"], ["updated_at", "2023-10-24 16:56:19.351063"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.0ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 5], ["quantidade", 61], ["created_at", "2023-10-24 16:56:19.356381"], ["updated_at", "2023-10-24 16:56:19.356381"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.5ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 46], ["produto_id", 1], ["created_at", "2023-10-24 16:56:19.365674"], ["updated_at", "2023-10-24 16:56:19.365674"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.1ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 79], ["produto_id", 2], ["created_at", "2023-10-24 16:56:19.369848"], ["updated_at", "2023-10-24 16:56:19.369848"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.0ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 43], ["produto_id", 4], ["created_at", "2023-10-24 16:56:19.373505"], ["updated_at", "2023-10-24 16:56:19.373505"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.0ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 61], ["produto_id", 5], ["created_at", "2023-10-24 16:56:19.376769"], ["updated_at", "2023-10-24 16:56:19.376769"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.6ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-24 12:23:19.277313"], ["tipo", "Pedido"], ["id_relacionado", 1], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "01:4:I"], ["created_at", "2023-10-24 16:56:19.389990"], ["updated_at", "2023-10-24 16:56:19.389990"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-06 14:05:29.300242"], ["tipo", "Pedido"], ["id_relacionado", 2], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "02:4:I"], ["created_at", "2023-10-24 16:56:19.394512"], ["updated_at", "2023-10-24 16:56:19.394512"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-06 23:22:30.165820"], ["tipo", "Pedido"], ["id_relacionado", 3], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "03:4:I"], ["created_at", "2023-10-24 16:56:19.397772"], ["updated_at", "2023-10-24 16:56:19.397772"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-24 13:25:49.076839"], ["tipo", "Pedido"], ["id_relacionado", 4], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "04:4:I"], ["created_at", "2023-10-24 16:56:19.401057"], ["updated_at", "2023-10-24 16:56:19.401057"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.3ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-07-27 07:31:00.141370"], ["tipo", "Pedido"], ["id_relacionado", 5], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "05:4:I"], ["created_at", "2023-10-24 16:56:19.404963"], ["updated_at", "2023-10-24 16:56:19.404963"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-12 03:11:59.469870"], ["tipo", "Venda"], ["id_relacionado", 1], ["descricao", "Pago e retirado na loja."], ["transacao_por", 1], ["localizacao", "01:4:I"], ["created_at", "2023-10-24 16:56:19.408579"], ["updated_at", "2023-10-24 16:56:19.408579"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-03 02:42:56.712462"], ["tipo", "Venda"], ["id_relacionado", 2], ["descricao", "Pago e retirado na loja."], ["transacao_por", 1], ["localizacao", "02:4:I"], ["created_at", "2023-10-24 16:56:19.414060"], ["updated_at", "2023-10-24 16:56:19.414060"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.2ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-17 11:31:56.156422"], ["tipo", "Venda"], ["id_relacionado", 3], ["descricao", "Pago e retirado na loja."], ["transacao_por", 1], ["localizacao", "03:4:I"], ["created_at", "2023-10-24 16:56:19.417601"], ["updated_at", "2023-10-24 16:56:19.417601"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-23 11:03:34.297720"], ["tipo", "Venda"], ["id_relacionado", 4], ["descricao", "Pago e retirado na loja."], ["transacao_por", 2], ["localizacao", "04:4:I"], ["created_at", "2023-10-24 16:56:19.421215"], ["updated_at", "2023-10-24 16:56:19.421215"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-03 01:26:53.964838"], ["tipo", "Venda"], ["id_relacionado", 5], ["descricao", "Pago e retirado na loja."], ["transacao_por", 2], ["localizacao", "05:4:I"], ["created_at", "2023-10-24 16:56:19.424936"], ["updated_at", "2023-10-24 16:56:19.424936"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-04 11:50:06.284476"], ["tipo", "Movimentado"], ["id_relacionado", 1], ["descricao", "Movido para os fundos da loja."], ["transacao_por", 5], ["localizacao", "01:4:I"], ["created_at", "2023-10-24 16:56:19.428435"], ["updated_at", "2023-10-24 16:56:19.428435"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.2ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-20 08:05:23.654072"], ["tipo", "Movimentado"], ["id_relacionado", 2], ["descricao", "Movido para a frente da loja."], ["transacao_por", 5], ["localizacao", "04:4:I"], ["created_at", "2023-10-24 16:56:19.432543"], ["updated_at", "2023-10-24 16:56:19.432543"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-08 20:07:39.619663"], ["tipo", "Movimentado"], ["id_relacionado", 3], ["descricao", "Movido para os fundos da loja."], ["transacao_por", 5], ["localizacao", "02:4:I"], ["created_at", "2023-10-24 16:56:19.436315"], ["updated_at", "2023-10-24 16:56:19.436315"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-22 07:54:57.435774"], ["tipo", "Movimentado"], ["id_relacionado", 4], ["descricao", "Movido para a frente da loja."], ["transacao_por", 5], ["localizacao", "05:4:I"], ["created_at", "2023-10-24 16:56:19.440053"], ["updated_at", "2023-10-24 16:56:19.440053"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE DATABASE "db_estoque" ENCODING = 'unicode'[0m
+  [1m[35m (17.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6773080999736976960)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2023-10-24 16:59:24.283368', '2023-10-24 16:59:24.283371') RETURNING "key"[0m
+Migrating to CreateProdutos (20231022173907)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (10.7ms)[0m  [1m[35mCREATE TABLE "produtos" ("id" bigserial primary key, "nome" character varying, "descricao" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173907') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateFuncionarios (20231022173915)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE TABLE "funcionarios" ("id" bigserial primary key, "nome" character varying, "cargo" character varying, "contato" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173915') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateClientes (20231022173926)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "clientes" ("id" bigserial primary key, "nome" character varying, "contato" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173926') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateFornecedores (20231022173939)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE "fornecedores" ("id" bigserial primary key, "nome" character varying, "contato" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173939') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateHistoricos (20231022174038)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "historicos" ("id" bigserial primary key, "data" timestamp(6), "tipo" character varying, "id_relacionado" integer NOT NULL, "descricao" text, "transacao_por" integer NOT NULL, "localizacao" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mALTER TABLE "historicos" ADD CONSTRAINT "fk_rails_cc1c127a7d"
+FOREIGN KEY ("transacao_por")
+  REFERENCES "funcionarios" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174038') RETURNING "version"[0m
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEstoques (20231022174048)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "estoques" ("id" bigserial primary key, "produto_id" bigint NOT NULL, "quantidade" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_4226040c9f"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_estoques_on_produto_id" ON "estoques" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174048') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePedidos (20231022174056)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "pedidos" ("id" bigserial primary key, "fornecedor_id" bigint NOT NULL, "produto_id" bigint NOT NULL, "quantidade" integer, "data_pedido" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_93b4457f69"
+FOREIGN KEY ("fornecedor_id")
+  REFERENCES "fornecedores" ("id")
+, CONSTRAINT "fk_rails_939dbfe2d7"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE INDEX "index_pedidos_on_fornecedor_id" ON "pedidos" ("fornecedor_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE INDEX "index_pedidos_on_produto_id" ON "pedidos" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174056') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateVendas (20231022174103)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "vendas" ("id" bigserial primary key, "cliente_id" bigint NOT NULL, "produto_id" bigint NOT NULL, "quantidade" integer, "data_venda" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_bad5fec6e4"
+FOREIGN KEY ("cliente_id")
+  REFERENCES "clientes" ("id")
+, CONSTRAINT "fk_rails_ab8f683e29"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE INDEX "index_vendas_on_cliente_id" ON "vendas" ("cliente_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE INDEX "index_vendas_on_produto_id" ON "vendas" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174103') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMovimentacoes (20231023165458)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE TABLE "movimentacoes" ("id" bigserial primary key, "quantidade" integer, "produto_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_f6a41e2c24"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE INDEX "index_movimentacoes_on_produto_id" ON "movimentacoes" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231023165458') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(6773080999736976960)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (2.0ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Tênis Olímpicos Branco"], ["descricao", "Um tênis esportivo para atletas e amantes do esporte."], ["created_at", "2023-10-24 16:59:25.358629"], ["updated_at", "2023-10-24 16:59:25.358629"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (0.9ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Sapato Saccarpan Vermelho"], ["descricao", "Um elegante sapato social em vermelho."], ["created_at", "2023-10-24 16:59:25.364257"], ["updated_at", "2023-10-24 16:59:25.364257"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (0.8ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Sapatilha Primavera Floral"], ["descricao", "Uma sapatilha feminina com estampa floral perfeita para a primavera."], ["created_at", "2023-10-24 16:59:25.367585"], ["updated_at", "2023-10-24 16:59:25.367585"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.1ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Botas Aventureiro em Couro"], ["descricao", "Botas robustas para os amantes da aventura e do ar livre."], ["created_at", "2023-10-24 16:59:25.370559"], ["updated_at", "2023-10-24 16:59:25.370559"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.2ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Sandália de Praia Sunset"], ["descricao", "Uma sandália confortável para desfrutar de um dia de sol na praia."], ["created_at", "2023-10-24 16:59:25.373918"], ["updated_at", "2023-10-24 16:59:25.373918"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (1.4ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "João Silva"], ["cargo", "Vendedor"], ["contato", "joao@lojadesapatos.com"], ["created_at", "2023-10-24 16:59:25.384302"], ["updated_at", "2023-10-24 16:59:25.384302"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (1.2ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Maria Santos"], ["cargo", "Vendedora"], ["contato", "maria@lojadesapatos.com"], ["created_at", "2023-10-24 16:59:25.388527"], ["updated_at", "2023-10-24 16:59:25.388527"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (1.3ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Pedro Ferreira"], ["cargo", "Gerente de Loja"], ["contato", "pedro@lojadesapatos.com"], ["created_at", "2023-10-24 16:59:25.392182"], ["updated_at", "2023-10-24 16:59:25.392182"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (0.8ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Ana Rodrigues"], ["cargo", "Caixa"], ["contato", "ana@lojadesapatos.com"], ["created_at", "2023-10-24 16:59:25.395933"], ["updated_at", "2023-10-24 16:59:25.395933"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (0.8ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Carlos Almeida"], ["cargo", "Estoquista"], ["contato", "carlos@lojadesapatos.com"], ["created_at", "2023-10-24 16:59:25.398909"], ["updated_at", "2023-10-24 16:59:25.398909"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (3.9ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Ana Pereira"], ["contato", "ana@gmail.com"], ["created_at", "2023-10-24 16:59:25.406619"], ["updated_at", "2023-10-24 16:59:25.406619"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (0.9ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Carlos Santos"], ["contato", "carlos@hotmail.com"], ["created_at", "2023-10-24 16:59:25.413087"], ["updated_at", "2023-10-24 16:59:25.413087"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (1.3ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Lúcia Ferreira"], ["contato", "lucia@yahoo.com"], ["created_at", "2023-10-24 16:59:25.416127"], ["updated_at", "2023-10-24 16:59:25.416127"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (0.8ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Mariana Silva"], ["contato", "mariana@gmail.com"], ["created_at", "2023-10-24 16:59:25.419618"], ["updated_at", "2023-10-24 16:59:25.419618"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (0.9ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Rafael Almeida"], ["contato", "rafael@hotmail.com"], ["created_at", "2023-10-24 16:59:25.422446"], ["updated_at", "2023-10-24 16:59:25.422446"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (1.2ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Fábrica de Calçados Star"], ["contato", "star@example.com"], ["created_at", "2023-10-24 16:59:25.430774"], ["updated_at", "2023-10-24 16:59:25.430774"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (0.9ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Distribuidora de Couro Lux"], ["contato", "lux@example.com"], ["created_at", "2023-10-24 16:59:25.434322"], ["updated_at", "2023-10-24 16:59:25.434322"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (0.8ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Importadora de Solas Solaris"], ["contato", "solaris@example.com"], ["created_at", "2023-10-24 16:59:25.437592"], ["updated_at", "2023-10-24 16:59:25.437592"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (1.1ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Fábrica de Sapatilhas Charme"], ["contato", "charme@example.com"], ["created_at", "2023-10-24 16:59:25.440498"], ["updated_at", "2023-10-24 16:59:25.440498"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (0.8ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Atacadista de Sapatos Top Style"], ["contato", "topstyle@example.com"], ["created_at", "2023-10-24 16:59:25.443555"], ["updated_at", "2023-10-24 16:59:25.443555"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (2.9ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 1], ["produto_id", 1], ["quantidade", 80], ["data_pedido", "2023-08-16 01:29:55.158116"], ["created_at", "2023-10-24 16:59:25.458217"], ["updated_at", "2023-10-24 16:59:25.458217"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.1ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 2], ["produto_id", 2], ["quantidade", 86], ["data_pedido", "2023-08-14 05:28:43.077349"], ["created_at", "2023-10-24 16:59:25.464102"], ["updated_at", "2023-10-24 16:59:25.464102"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.3ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 3], ["produto_id", 3], ["quantidade", 78], ["data_pedido", "2023-08-19 23:38:11.458302"], ["created_at", "2023-10-24 16:59:25.470069"], ["updated_at", "2023-10-24 16:59:25.470069"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.7ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 4], ["produto_id", 4], ["quantidade", 74], ["data_pedido", "2023-07-25 16:03:47.858419"], ["created_at", "2023-10-24 16:59:25.473857"], ["updated_at", "2023-10-24 16:59:25.473857"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.0ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 5], ["produto_id", 5], ["quantidade", 81], ["data_pedido", "2023-08-09 07:37:29.968227"], ["created_at", "2023-10-24 16:59:25.477956"], ["updated_at", "2023-10-24 16:59:25.477956"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.8ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 1], ["produto_id", 1], ["quantidade", 34], ["data_venda", "2023-09-27 10:45:19.546724"], ["created_at", "2023-10-24 16:59:25.490065"], ["updated_at", "2023-10-24 16:59:25.490065"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.1ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 2], ["produto_id", 2], ["quantidade", 31], ["data_venda", "2023-10-20 09:15:54.601508"], ["created_at", "2023-10-24 16:59:25.494504"], ["updated_at", "2023-10-24 16:59:25.494504"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.0ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 3], ["produto_id", 3], ["quantidade", 40], ["data_venda", "2023-10-05 08:47:55.258140"], ["created_at", "2023-10-24 16:59:25.498360"], ["updated_at", "2023-10-24 16:59:25.498360"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.0ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 4], ["produto_id", 4], ["quantidade", 2], ["data_venda", "2023-09-28 23:42:38.171174"], ["created_at", "2023-10-24 16:59:25.501775"], ["updated_at", "2023-10-24 16:59:25.501775"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.1ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 5], ["produto_id", 5], ["quantidade", 1], ["data_venda", "2023-10-10 08:00:41.720764"], ["created_at", "2023-10-24 16:59:25.505078"], ["updated_at", "2023-10-24 16:59:25.505078"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.4ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 1], ["quantidade", 46], ["created_at", "2023-10-24 16:59:25.514141"], ["updated_at", "2023-10-24 16:59:25.514141"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (0.9ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 2], ["quantidade", 55], ["created_at", "2023-10-24 16:59:25.518148"], ["updated_at", "2023-10-24 16:59:25.518148"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.1ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 3], ["quantidade", 38], ["created_at", "2023-10-24 16:59:25.521167"], ["updated_at", "2023-10-24 16:59:25.521167"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (2.7ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 4], ["quantidade", 72], ["created_at", "2023-10-24 16:59:25.524326"], ["updated_at", "2023-10-24 16:59:25.524326"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (0.9ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 5], ["quantidade", 80], ["created_at", "2023-10-24 16:59:25.529380"], ["updated_at", "2023-10-24 16:59:25.529380"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.5ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 46], ["produto_id", 1], ["created_at", "2023-10-24 16:59:25.538482"], ["updated_at", "2023-10-24 16:59:25.538482"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.0ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 55], ["produto_id", 2], ["created_at", "2023-10-24 16:59:25.542398"], ["updated_at", "2023-10-24 16:59:25.542398"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.0ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 72], ["produto_id", 4], ["created_at", "2023-10-24 16:59:25.545717"], ["updated_at", "2023-10-24 16:59:25.545717"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.0ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 80], ["produto_id", 5], ["created_at", "2023-10-24 16:59:25.548938"], ["updated_at", "2023-10-24 16:59:25.548938"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.8ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-16 01:29:55.158116"], ["tipo", "Pedido"], ["id_relacionado", 1], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "01:4:I"], ["created_at", "2023-10-24 16:59:25.561928"], ["updated_at", "2023-10-24 16:59:25.561928"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (0.9ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-14 05:28:43.077349"], ["tipo", "Pedido"], ["id_relacionado", 2], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "02:4:I"], ["created_at", "2023-10-24 16:59:25.566263"], ["updated_at", "2023-10-24 16:59:25.566263"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-19 23:38:11.458302"], ["tipo", "Pedido"], ["id_relacionado", 3], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "03:4:I"], ["created_at", "2023-10-24 16:59:25.569476"], ["updated_at", "2023-10-24 16:59:25.569476"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (0.9ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-07-25 16:03:47.858419"], ["tipo", "Pedido"], ["id_relacionado", 4], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "04:4:I"], ["created_at", "2023-10-24 16:59:25.572604"], ["updated_at", "2023-10-24 16:59:25.572604"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-09 07:37:29.968227"], ["tipo", "Pedido"], ["id_relacionado", 5], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "05:4:I"], ["created_at", "2023-10-24 16:59:25.576035"], ["updated_at", "2023-10-24 16:59:25.576035"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (0.9ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-27 10:45:19.546724"], ["tipo", "Venda"], ["id_relacionado", 1], ["descricao", "Pago e retirado na loja."], ["transacao_por", 1], ["localizacao", "01:4:I"], ["created_at", "2023-10-24 16:59:25.579216"], ["updated_at", "2023-10-24 16:59:25.579216"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-20 09:15:54.601508"], ["tipo", "Venda"], ["id_relacionado", 2], ["descricao", "Pago e retirado na loja."], ["transacao_por", 1], ["localizacao", "02:4:I"], ["created_at", "2023-10-24 16:59:25.584313"], ["updated_at", "2023-10-24 16:59:25.584313"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.3ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-05 08:47:55.258140"], ["tipo", "Venda"], ["id_relacionado", 3], ["descricao", "Pago e retirado na loja."], ["transacao_por", 1], ["localizacao", "03:4:I"], ["created_at", "2023-10-24 16:59:25.587779"], ["updated_at", "2023-10-24 16:59:25.587779"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (0.9ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-28 23:42:38.171174"], ["tipo", "Venda"], ["id_relacionado", 4], ["descricao", "Pago e retirado na loja."], ["transacao_por", 2], ["localizacao", "04:4:I"], ["created_at", "2023-10-24 16:59:25.591478"], ["updated_at", "2023-10-24 16:59:25.591478"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-10 08:00:41.720764"], ["tipo", "Venda"], ["id_relacionado", 5], ["descricao", "Pago e retirado na loja."], ["transacao_por", 2], ["localizacao", "05:4:I"], ["created_at", "2023-10-24 16:59:25.595052"], ["updated_at", "2023-10-24 16:59:25.595052"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.4ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-18 19:33:00.353749"], ["tipo", "Movimentado"], ["id_relacionado", 1], ["descricao", "Movido para os fundos da loja."], ["transacao_por", 5], ["localizacao", "01:4:I"], ["created_at", "2023-10-24 16:59:25.598567"], ["updated_at", "2023-10-24 16:59:25.598567"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.3ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-09 19:39:32.662576"], ["tipo", "Movimentado"], ["id_relacionado", 2], ["descricao", "Movido para a frente da loja."], ["transacao_por", 5], ["localizacao", "04:4:I"], ["created_at", "2023-10-24 16:59:25.603678"], ["updated_at", "2023-10-24 16:59:25.603678"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-30 04:53:15.457116"], ["tipo", "Movimentado"], ["id_relacionado", 3], ["descricao", "Movido para os fundos da loja."], ["transacao_por", 5], ["localizacao", "02:4:I"], ["created_at", "2023-10-24 16:59:25.607851"], ["updated_at", "2023-10-24 16:59:25.607851"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-21 05:29:14.084598"], ["tipo", "Movimentado"], ["id_relacionado", 4], ["descricao", "Movido para a frente da loja."], ["transacao_por", 5], ["localizacao", "05:4:I"], ["created_at", "2023-10-24 16:59:25.611514"], ["updated_at", "2023-10-24 16:59:25.611514"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE DATABASE "db_estoque" ENCODING = 'unicode'[0m
+  [1m[35m (13.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6773080999736976960)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (2.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2023-10-24 17:23:58.632051', '2023-10-24 17:23:58.632055') RETURNING "key"[0m
+Migrating to CreateProdutos (20231022173907)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (10.0ms)[0m  [1m[35mCREATE TABLE "produtos" ("id" bigserial primary key, "nome" character varying, "descricao" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173907') RETURNING "version"[0m
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateFuncionarios (20231022173915)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "funcionarios" ("id" bigserial primary key, "nome" character varying, "cargo" character varying, "contato" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173915') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateClientes (20231022173926)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.7ms)[0m  [1m[35mCREATE TABLE "clientes" ("id" bigserial primary key, "nome" character varying, "contato" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173926') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateFornecedores (20231022173939)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE "fornecedores" ("id" bigserial primary key, "nome" character varying, "contato" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022173939') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateHistoricos (20231022174038)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "historicos" ("id" bigserial primary key, "data" timestamp(6), "tipo" character varying, "id_relacionado" integer NOT NULL, "descricao" text, "transacao_por" integer NOT NULL, "localizacao" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mALTER TABLE "historicos" ADD CONSTRAINT "fk_rails_cc1c127a7d"
+FOREIGN KEY ("transacao_por")
+  REFERENCES "funcionarios" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174038') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEstoques (20231022174048)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "estoques" ("id" bigserial primary key, "produto_id" bigint NOT NULL, "quantidade" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_4226040c9f"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE INDEX "index_estoques_on_produto_id" ON "estoques" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174048') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePedidos (20231022174056)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE TABLE "pedidos" ("id" bigserial primary key, "fornecedor_id" bigint NOT NULL, "produto_id" bigint NOT NULL, "quantidade" integer, "data_pedido" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_93b4457f69"
+FOREIGN KEY ("fornecedor_id")
+  REFERENCES "fornecedores" ("id")
+, CONSTRAINT "fk_rails_939dbfe2d7"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_pedidos_on_fornecedor_id" ON "pedidos" ("fornecedor_id")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_pedidos_on_produto_id" ON "pedidos" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174056') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateVendas (20231022174103)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "vendas" ("id" bigserial primary key, "cliente_id" bigint NOT NULL, "produto_id" bigint NOT NULL, "quantidade" integer, "data_venda" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_bad5fec6e4"
+FOREIGN KEY ("cliente_id")
+  REFERENCES "clientes" ("id")
+, CONSTRAINT "fk_rails_ab8f683e29"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_vendas_on_cliente_id" ON "vendas" ("cliente_id")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_vendas_on_produto_id" ON "vendas" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231022174103') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMovimentacoes (20231023165458)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "movimentacoes" ("id" bigserial primary key, "quantidade" integer, "produto_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_f6a41e2c24"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE INDEX "index_movimentacoes_on_produto_id" ON "movimentacoes" ("produto_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20231023165458') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(6773080999736976960)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.6ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Tênis Olímpicos Branco"], ["descricao", "Um tênis esportivo para atletas e amantes do esporte."], ["created_at", "2023-10-24 17:23:59.699278"], ["updated_at", "2023-10-24 17:23:59.699278"]]
+  [1m[36mTRANSACTION (3.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.1ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Sapato Saccarpan Vermelho"], ["descricao", "Um elegante sapato social em vermelho."], ["created_at", "2023-10-24 17:23:59.707437"], ["updated_at", "2023-10-24 17:23:59.707437"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.0ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Sapatilha Primavera Floral"], ["descricao", "Uma sapatilha feminina com estampa floral perfeita para a primavera."], ["created_at", "2023-10-24 17:23:59.711722"], ["updated_at", "2023-10-24 17:23:59.711722"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.2ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Botas Aventureiro em Couro"], ["descricao", "Botas robustas para os amantes da aventura e do ar livre."], ["created_at", "2023-10-24 17:23:59.715271"], ["updated_at", "2023-10-24 17:23:59.715271"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProduto Create (1.4ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "descricao", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Sandália de Praia Sunset"], ["descricao", "Uma sandália confortável para desfrutar de um dia de sol na praia."], ["created_at", "2023-10-24 17:23:59.719118"], ["updated_at", "2023-10-24 17:23:59.719118"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (1.6ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "João Silva"], ["cargo", "Vendedor"], ["contato", "joao@lojadesapatos.com"], ["created_at", "2023-10-24 17:23:59.730281"], ["updated_at", "2023-10-24 17:23:59.730281"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (1.3ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Maria Santos"], ["cargo", "Vendedora"], ["contato", "maria@lojadesapatos.com"], ["created_at", "2023-10-24 17:23:59.735472"], ["updated_at", "2023-10-24 17:23:59.735472"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (1.3ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Pedro Ferreira"], ["cargo", "Gerente de Loja"], ["contato", "pedro@lojadesapatos.com"], ["created_at", "2023-10-24 17:23:59.740016"], ["updated_at", "2023-10-24 17:23:59.740016"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (0.9ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Ana Rodrigues"], ["cargo", "Caixa"], ["contato", "ana@lojadesapatos.com"], ["created_at", "2023-10-24 17:23:59.744522"], ["updated_at", "2023-10-24 17:23:59.744522"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFuncionario Create (0.9ms)[0m  [1m[32mINSERT INTO "funcionarios" ("nome", "cargo", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["nome", "Carlos Almeida"], ["cargo", "Estoquista"], ["contato", "carlos@lojadesapatos.com"], ["created_at", "2023-10-24 17:23:59.747835"], ["updated_at", "2023-10-24 17:23:59.747835"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (4.2ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Ana Pereira"], ["contato", "ana@gmail.com"], ["created_at", "2023-10-24 17:23:59.755880"], ["updated_at", "2023-10-24 17:23:59.755880"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (1.1ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Carlos Santos"], ["contato", "carlos@hotmail.com"], ["created_at", "2023-10-24 17:23:59.762782"], ["updated_at", "2023-10-24 17:23:59.762782"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (1.1ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Lúcia Ferreira"], ["contato", "lucia@yahoo.com"], ["created_at", "2023-10-24 17:23:59.766369"], ["updated_at", "2023-10-24 17:23:59.766369"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (1.0ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Mariana Silva"], ["contato", "mariana@gmail.com"], ["created_at", "2023-10-24 17:23:59.770345"], ["updated_at", "2023-10-24 17:23:59.770345"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCliente Create (1.0ms)[0m  [1m[32mINSERT INTO "clientes" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Rafael Almeida"], ["contato", "rafael@hotmail.com"], ["created_at", "2023-10-24 17:23:59.773694"], ["updated_at", "2023-10-24 17:23:59.773694"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (1.3ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Fábrica de Calçados Star"], ["contato", "star@example.com"], ["created_at", "2023-10-24 17:23:59.782375"], ["updated_at", "2023-10-24 17:23:59.782375"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (1.0ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Distribuidora de Couro Lux"], ["contato", "lux@example.com"], ["created_at", "2023-10-24 17:23:59.786334"], ["updated_at", "2023-10-24 17:23:59.786334"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (0.9ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Importadora de Solas Solaris"], ["contato", "solaris@example.com"], ["created_at", "2023-10-24 17:23:59.790034"], ["updated_at", "2023-10-24 17:23:59.790034"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (0.9ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Fábrica de Sapatilhas Charme"], ["contato", "charme@example.com"], ["created_at", "2023-10-24 17:23:59.793035"], ["updated_at", "2023-10-24 17:23:59.793035"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mFornecedor Create (1.2ms)[0m  [1m[32mINSERT INTO "fornecedores" ("nome", "contato", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "Atacadista de Sapatos Top Style"], ["contato", "topstyle@example.com"], ["created_at", "2023-10-24 17:23:59.796097"], ["updated_at", "2023-10-24 17:23:59.796097"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (3.0ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 1], ["produto_id", 1], ["quantidade", 88], ["data_pedido", "2023-07-26 14:01:10.840069"], ["created_at", "2023-10-24 17:23:59.811352"], ["updated_at", "2023-10-24 17:23:59.811352"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.3ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 2], ["produto_id", 2], ["quantidade", 67], ["data_pedido", "2023-07-29 23:49:01.896910"], ["created_at", "2023-10-24 17:23:59.817800"], ["updated_at", "2023-10-24 17:23:59.817800"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.3ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 3], ["produto_id", 3], ["quantidade", 96], ["data_pedido", "2023-08-18 04:43:57.466527"], ["created_at", "2023-10-24 17:23:59.824085"], ["updated_at", "2023-10-24 17:23:59.824085"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.7ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 4], ["produto_id", 4], ["quantidade", 75], ["data_pedido", "2023-08-17 11:43:48.928551"], ["created_at", "2023-10-24 17:23:59.828225"], ["updated_at", "2023-10-24 17:23:59.828225"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPedido Create (1.2ms)[0m  [1m[32mINSERT INTO "pedidos" ("fornecedor_id", "produto_id", "quantidade", "data_pedido", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["fornecedor_id", 5], ["produto_id", 5], ["quantidade", 96], ["data_pedido", "2023-08-12 21:39:51.125422"], ["created_at", "2023-10-24 17:23:59.832849"], ["updated_at", "2023-10-24 17:23:59.832849"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.9ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 1], ["produto_id", 1], ["quantidade", 8], ["data_venda", "2023-10-17 14:42:31.645442"], ["created_at", "2023-10-24 17:23:59.845489"], ["updated_at", "2023-10-24 17:23:59.845489"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.5ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 2], ["produto_id", 2], ["quantidade", 31], ["data_venda", "2023-10-01 17:32:14.490961"], ["created_at", "2023-10-24 17:23:59.850554"], ["updated_at", "2023-10-24 17:23:59.850554"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.2ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 3], ["produto_id", 3], ["quantidade", 31], ["data_venda", "2023-10-08 05:29:05.482847"], ["created_at", "2023-10-24 17:23:59.854874"], ["updated_at", "2023-10-24 17:23:59.854874"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.1ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 4], ["produto_id", 4], ["quantidade", 11], ["data_venda", "2023-10-01 11:00:48.828357"], ["created_at", "2023-10-24 17:23:59.858722"], ["updated_at", "2023-10-24 17:23:59.858722"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVenda Create (1.1ms)[0m  [1m[32mINSERT INTO "vendas" ("cliente_id", "produto_id", "quantidade", "data_venda", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["cliente_id", 5], ["produto_id", 5], ["quantidade", 26], ["data_venda", "2023-10-10 14:41:41.868679"], ["created_at", "2023-10-24 17:23:59.862391"], ["updated_at", "2023-10-24 17:23:59.862391"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.5ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 1], ["quantidade", 80], ["created_at", "2023-10-24 17:23:59.871885"], ["updated_at", "2023-10-24 17:23:59.871885"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.1ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 2], ["quantidade", 36], ["created_at", "2023-10-24 17:23:59.875989"], ["updated_at", "2023-10-24 17:23:59.875989"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.2ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 3], ["quantidade", 65], ["created_at", "2023-10-24 17:23:59.879496"], ["updated_at", "2023-10-24 17:23:59.879496"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (2.8ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 4], ["quantidade", 64], ["created_at", "2023-10-24 17:23:59.883107"], ["updated_at", "2023-10-24 17:23:59.883107"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEstoque Create (1.0ms)[0m  [1m[32mINSERT INTO "estoques" ("produto_id", "quantidade", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["produto_id", 5], ["quantidade", 70], ["created_at", "2023-10-24 17:23:59.888376"], ["updated_at", "2023-10-24 17:23:59.888376"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.6ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 80], ["produto_id", 1], ["created_at", "2023-10-24 17:23:59.897536"], ["updated_at", "2023-10-24 17:23:59.897536"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.0ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 36], ["produto_id", 2], ["created_at", "2023-10-24 17:23:59.901863"], ["updated_at", "2023-10-24 17:23:59.901863"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.1ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 64], ["produto_id", 4], ["created_at", "2023-10-24 17:23:59.905639"], ["updated_at", "2023-10-24 17:23:59.905639"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovimentacao Create (1.0ms)[0m  [1m[32mINSERT INTO "movimentacoes" ("quantidade", "produto_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["quantidade", 70], ["produto_id", 5], ["created_at", "2023-10-24 17:23:59.909121"], ["updated_at", "2023-10-24 17:23:59.909121"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.8ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-07-26 14:01:10.840069"], ["tipo", "Pedido"], ["id_relacionado", 1], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "01:4:I"], ["created_at", "2023-10-24 17:23:59.922674"], ["updated_at", "2023-10-24 17:23:59.922674"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.2ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-07-29 23:49:01.896910"], ["tipo", "Pedido"], ["id_relacionado", 2], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "02:4:I"], ["created_at", "2023-10-24 17:23:59.927695"], ["updated_at", "2023-10-24 17:23:59.927695"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-18 04:43:57.466527"], ["tipo", "Pedido"], ["id_relacionado", 3], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "03:4:I"], ["created_at", "2023-10-24 17:23:59.931588"], ["updated_at", "2023-10-24 17:23:59.931588"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-17 11:43:48.928551"], ["tipo", "Pedido"], ["id_relacionado", 4], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "04:4:I"], ["created_at", "2023-10-24 17:23:59.935662"], ["updated_at", "2023-10-24 17:23:59.935662"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-12 21:39:51.125422"], ["tipo", "Pedido"], ["id_relacionado", 5], ["descricao", "Produto recebido e vistoriado. Sem avarias."], ["transacao_por", 3], ["localizacao", "05:4:I"], ["created_at", "2023-10-24 17:23:59.939321"], ["updated_at", "2023-10-24 17:23:59.939321"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (0.9ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-17 14:42:31.645442"], ["tipo", "Venda"], ["id_relacionado", 1], ["descricao", "Pago e retirado na loja."], ["transacao_por", 1], ["localizacao", "01:4:I"], ["created_at", "2023-10-24 17:23:59.942805"], ["updated_at", "2023-10-24 17:23:59.942805"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.1ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-01 17:32:14.490961"], ["tipo", "Venda"], ["id_relacionado", 2], ["descricao", "Pago e retirado na loja."], ["transacao_por", 1], ["localizacao", "02:4:I"], ["created_at", "2023-10-24 17:23:59.948073"], ["updated_at", "2023-10-24 17:23:59.948073"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.2ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-08 05:29:05.482847"], ["tipo", "Venda"], ["id_relacionado", 3], ["descricao", "Pago e retirado na loja."], ["transacao_por", 1], ["localizacao", "03:4:I"], ["created_at", "2023-10-24 17:23:59.951554"], ["updated_at", "2023-10-24 17:23:59.951554"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-01 11:00:48.828357"], ["tipo", "Venda"], ["id_relacionado", 4], ["descricao", "Pago e retirado na loja."], ["transacao_por", 2], ["localizacao", "04:4:I"], ["created_at", "2023-10-24 17:23:59.955200"], ["updated_at", "2023-10-24 17:23:59.955200"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-10-10 14:41:41.868679"], ["tipo", "Venda"], ["id_relacionado", 5], ["descricao", "Pago e retirado na loja."], ["transacao_por", 2], ["localizacao", "05:4:I"], ["created_at", "2023-10-24 17:23:59.958739"], ["updated_at", "2023-10-24 17:23:59.958739"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (0.9ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-09-20 19:14:42.052813"], ["tipo", "Movimentado"], ["id_relacionado", 1], ["descricao", "Movido para os fundos da loja."], ["transacao_por", 5], ["localizacao", "01:4:I"], ["created_at", "2023-10-24 17:23:59.962165"], ["updated_at", "2023-10-24 17:23:59.962165"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (0.9ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-31 00:12:03.758862"], ["tipo", "Movimentado"], ["id_relacionado", 2], ["descricao", "Movido para a frente da loja."], ["transacao_por", 5], ["localizacao", "04:4:I"], ["created_at", "2023-10-24 17:23:59.965945"], ["updated_at", "2023-10-24 17:23:59.965945"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (1.0ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-26 09:52:43.766804"], ["tipo", "Movimentado"], ["id_relacionado", 3], ["descricao", "Movido para os fundos da loja."], ["transacao_por", 5], ["localizacao", "02:4:I"], ["created_at", "2023-10-24 17:23:59.969173"], ["updated_at", "2023-10-24 17:23:59.969173"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHistorico Create (0.9ms)[0m  [1m[32mINSERT INTO "historicos" ("data", "tipo", "id_relacionado", "descricao", "transacao_por", "localizacao", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["data", "2023-08-25 08:21:47.717935"], ["tipo", "Movimentado"], ["id_relacionado", 4], ["descricao", "Movido para a frente da loja."], ["transacao_por", 5], ["localizacao", "05:4:I"], ["created_at", "2023-10-24 17:23:59.972533"], ["updated_at", "2023-10-24 17:23:59.972533"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m

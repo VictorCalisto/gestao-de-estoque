@@ -5,31 +5,31 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-/.bundle
+/gestao_estoque/.bundle
 
 # Ignore all environment files (except templates).
 /.env*
 !/.env*.erb
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
+/gestao_estoque/log/*
+/gestao_estoque/tmp/*
+/gestao_estoque!/log/.keep
+/gestao_estoque!/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
-/tmp/pids/*
-!/tmp/pids/
-!/tmp/pids/.keep
+/gestao_estoque/tmp/pids/*
+!/gestao_estoque/tmp/pids/
+!/gestao_estoque/tmp/pids/.keep
 
 # Ignore storage (uploaded files in development and any SQLite databases).
-/storage/*
-!/storage/.keep
-/tmp/storage/*
-!/tmp/storage/
-!/tmp/storage/.keep
+/gestao_estoque/storage/*
+!/gestao_estoque/storage/.keep
+/gestao_estoque/tmp/storage/*
+!/gestao_estoque/tmp/storage/
+!/gestao_estoque/tmp/storage/.keep
 
-/public/assets
+/gestao_estoque/public/assets
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+/gestao_estoque/config/master.key
