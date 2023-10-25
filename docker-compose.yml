@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    #command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
       - "3000:3000"
     volumes:
@@ -22,15 +22,18 @@ services:
       #host do banco
       POSTGRES_DB: db_estoque
       POSTGRES_HOST_AUTH_METHOD: trust
-    volumes:
-      - ./data:/usr/local/bin/pg_config
+    # volumes:
+    #   - ./data:/usr/local/bin/pg_config
     ports:
       - 5432:5432
     networks:
       - my_network
   python:
-    image: python:3.13.0a1-alpine3.18
-    command: ["sh", "-c", "sleep infinity & pip3 install -r requirements.txt"]
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    # image: python:3.13.0a1-bookworm
+    # command: ["sh", "-c", "sleep infinity"]
     volumes:
       - ./python:/python
     depends_on:

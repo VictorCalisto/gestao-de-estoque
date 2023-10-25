@@ -10,7 +10,7 @@
 # Ignore all environment files (except templates).
 /.env*
 !/.env*.erb
-
+/data/
 # Ignore all logfiles and tempfiles.
 /gestao_estoque/log/*
 /gestao_estoque/tmp/*

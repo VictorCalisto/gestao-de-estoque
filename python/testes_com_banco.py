@@ -1,21 +1,24 @@
-import psycopg2
+import psycopg
 
 # Configurações do banco de dados
 db_config = {
-    "host": "postgres",  # Use o nome do serviço definido no Docker Compose
-    "database": "db_estoque",  # Nome do banco de dados
-    "user": "postgres",  # Seu nome de usuário
-    "password": ""  # Sua senha (se necessário)
+    "dbname": "db_estoque",
+    "host": "postgres",
+    "password": "",
+    "port": "5432",
+    "user": "postgres"
 }
 
     
 def conectar_banco():
     try:
-        conn = psycopg2.connect(**db_config)
+        conn = psycopg.connect(**db_config)
         return conn
     except Exception as e:
         print("Erro na conexão com o banco de dados:", e)
         return None
+    # finally:
+    #     conn.close()
 
 class BancoDeTeste:
     def __init__(self):
@@ -28,14 +31,21 @@ class BancoDeTeste:
     def execute_query(self, query):
         try:
             self.cursor.execute(query)
+            rows = self.cursor.fetchall()  # Recupera todos os resultados da consulta
+
+            if rows:
+                for row in rows:
+                    print(row)  # Exibe cada linha da consulta
+            else:
+                print("Nenhum resultado encontrado.")
+
             self.conn.commit()
             print("Query successful")
         except Exception as err:
             print(f"Error: '{err}'")
 
 consulta = '''
-USE db_estoque
-SELECT produtos.nomes
+SELECT nome
 FROM produtos
 '''
 banco = BancoDeTeste()

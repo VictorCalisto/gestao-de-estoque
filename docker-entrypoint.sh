@@ -13,7 +13,7 @@ then
   rails db:create
   rails db:migrate
   rails db:seed
-  echo "Já existe um Gemfile.lock no diretório. Comando bundle install executado."
+  echo "Já existe um Gemfile.lock no diretório $diretorio."
 else
   echo "Nenhum Gemfile.lock encontrado. Criando um novo projeto Rails..."
   
@@ -21,18 +21,15 @@ else
   rails new .
   bundle install
   
-  echo "Novo projeto Rails foi criado em $diretorio."
+  echo "Novo projeto Rails foi criado no diretório $diretorio."
 fi
+
+# Limpa o PID
+rm -f /app/tmp/pids/server.pid
+echo "Arquivo server.pid deletado. Subindo servidor rails ...."
 
 # Subindo o servidor do rails
 exec bundle exec rails s -p 3000 -b 0.0.0.0
-
-# Obtém o PID do processo principal
-MAIN_PID=$(ps aux | grep '[r]ails s -p 3000 -b 0.0.0.0' | awk '{print $2}')
-
-# Limpa o PID
-echo "Limpando PID: $MAIN_PID"
-rm -f /app/tmp/pids/server.pid
 
 # Executa o comando principal (a aplicação Rails)
 exec "$@"

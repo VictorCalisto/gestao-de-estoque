@@ -1,4 +1,4 @@
-import psycopg2
+import pg8000
 
 # Configurações do banco de dados
 db_config = {
@@ -7,11 +7,10 @@ db_config = {
     "user": "postgres",  # Seu nome de usuário
     "password": ""  # Sua senha (se necessário)
 }
-def __init__():
-    
+
 def conectar_banco():
     try:
-        conn = psycopg2.connect(**db_config)
+        conn = pg8000.connect(**db_config)
         return conn
     except Exception as e:
         print("Erro na conexão com o banco de dados:", e)
