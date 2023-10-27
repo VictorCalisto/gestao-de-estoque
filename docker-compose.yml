@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    #command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
       - "3000:3000"
     volumes:
@@ -32,8 +31,6 @@ services:
     build:
       context: ./python
       dockerfile: Dockerfile
-    # image: python:3.13.0a1-bookworm
-    # command: ["sh", "-c", "sleep infinity"]
     volumes:
       - ./python:/python
     depends_on:

@@ -10,10 +10,17 @@ diretorio="/app"
 if [ -e "$diretorio/Gemfile.lock" ];
 then
   bundle install
-  rails db:create
-  rails db:migrate
-  rails db:seed
   echo "Já existe um Gemfile.lock no diretório $diretorio."
+  if rails db:version 2>/dev/null; then
+    rails db:create
+    rails db:migrate
+    echo "O banco de dados já contém informações. Nenhum comando de seed será executado."
+  else
+    rails db:create
+    rails db:migrate
+    rails db:seed
+    echo "Comandos de seed concluídos, o banco de dados está configurado."
+  fi
 else
   echo "Nenhum Gemfile.lock encontrado. Criando um novo projeto Rails..."
   

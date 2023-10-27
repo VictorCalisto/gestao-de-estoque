@@ -4,18 +4,23 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+/data/
+/python/__pycache__
+
+
+
+
 # Ignore bundler config.
 /gestao_estoque/.bundle
 
 # Ignore all environment files (except templates).
 /.env*
 !/.env*.erb
-/data/
 # Ignore all logfiles and tempfiles.
 /gestao_estoque/log/*
 /gestao_estoque/tmp/*
-/gestao_estoque!/log/.keep
-/gestao_estoque!/tmp/.keep
+!/gestao_estoque/log/.keep
+!/gestao_estoque/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
 /gestao_estoque/tmp/pids/*
