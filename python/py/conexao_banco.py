@@ -34,5 +34,3 @@ def conectar_banco(parametro):
     except Exception as e:
         print("Erro na conexão com o banco de dados:", e)
         return None
-    # finally:
-    #     conn.close()

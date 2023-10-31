@@ -24,11 +24,10 @@ RUN chmod +x /usr/local/bin/pg_config
 # Instala as dependências
 RUN pip install -r requirements.txt
 
-# ENV PATH="/usr/local/bin:${PATH}"
-RUN pip install psycopg
-
 # Expõe a porta que o app usa
 EXPOSE 5000
+
+WORKDIR /python/py
 
 CMD ["sh", "-c", "sleep infinity"]
 

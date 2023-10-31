@@ -1,1 +1,2 @@
 psycopg
+Faker==19.12

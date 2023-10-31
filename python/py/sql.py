@@ -16,22 +16,23 @@ class Banco():
             cursor.execute(sql)
             #Caso seja Select
             if sql.strip().upper().startswith("SELECT"):
-                rows = cursor.fetchall()
-                for row in rows:
-                    print(row)
+                linhas = cursor.fetchall()
+                for linha in linhas:
+                    print(linha)
                 print('---------------------')
+                return linhas
             #Caso seja outra coisa
             else:
                 self.conn.commit()
             
             cursor.close()#fecha cursor
         except Exception as e:
-            print("Erro na execução do SQL:", e)#tudo errado
+            print("Erro na execução do SQL:", e)#mostra o erro
 
-    def criar_tabela(self, nome_da_tabela:str, nova_linha:dict):
+    def criar_tabela(self, nome_da_tabela:str, nova_coluna:dict):
         try:
-            #monta a lista a partir do nova_linha
-            colunas = ', '.join(f"{coluna} {tipo}" for coluna, tipo in nova_linha.items())
+            #monta a lista a partir do nova_coluna
+            colunas = ', '.join(f"{coluna} {tipo}" for coluna, tipo in nova_coluna.items())
             #Comando SQL a ser executado no banco
             sql = f"CREATE TABLE {nome_da_tabela} ({colunas});"
             #execucao do comando
@@ -86,7 +87,7 @@ class Banco():
                     else:
                         filtro.append(f"{coluna} = {valor}")
 
-            #converte os vetores em string separadas por virgulas
+            #converte os vetores em string separadas por ANDs
             filtro = ' AND '.join(filtro)
 
             #gera o sql que exclui a linha
@@ -110,7 +111,7 @@ class Banco():
                         else:
                             filtro.append(f"{coluna} = {valor}")
 
-                #converte os vetores em string separadas por virgulas
+                #converte os vetores em string separadas por ANDs
                 filtro = ' AND '.join(filtro)
 
                 #gera o sql que exclui a linha
@@ -145,10 +146,8 @@ class Banco():
                 else:
                     novo_valor.append(f"{coluna} = {valor}")
 
-            #converte os vetores em string separadas por virgulas
             filtro = ' AND '.join(filtro)
             novo_valor = ' , '.join(novo_valor)
-
 
             #gera o sql que exclui a linha
             sql= f"UPDATE {nome_da_tabela} SET {novo_valor} WHERE {filtro};"
@@ -163,7 +162,7 @@ class Banco():
 
             self._executar_sql(sql)
         except Exception as e:
-            print("Erro ao editar linha:", e)
+            print("Erro ao excluir colunas:", e)
 
     def excluir_tabela(self,nome_da_tabela:str):
         try:    
@@ -172,10 +171,3 @@ class Banco():
             self._executar_sql(sql)
         except Exception as e:
             print("Erro ao excluir tabela:", e)
-
-        try:    
-            sql=f"UPDATE {nome_da_tabela} SET {coluna_copia} = {coluna_copiada};"
-
-            self._executar_sql(sql)
-        except Exception as e:
-            print("Erro ao copiar a coluna:", e)
