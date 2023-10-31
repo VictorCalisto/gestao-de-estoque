@@ -2,7 +2,7 @@
 
 # Ignore git directory.
 /.git/
-
+/.idea/
 # Ignore bundler config.
 /.bundle
 
