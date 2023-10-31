@@ -4,6 +4,8 @@
 /.git/
 /.idea/
 /.DS_Store
+/gestao_estoque/app/.DS_Store
+/gestao_estoque/app/assets/.DS_Store
 
 # Ignore bundler config.
 /.bundle
